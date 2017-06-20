@@ -18,7 +18,7 @@ class Artwork < ApplicationRecord
     message: "No duplicate title for same artist"
   }
 
-  belongs_to :artist,
+  belongs_to :artist, dependent: :destroy,
     primary_key: :id,
     foreign_key: :artist_id,
     class_name: :User
@@ -29,4 +29,8 @@ class Artwork < ApplicationRecord
   has_many :shared_viewers,
     through: :shares,
     source: :viewer
+  has_many :comments, dependent: :destroy,
+    primary_key: :id,
+    foreign_key: :artwork_id,
+    class_name: :Comment
 end
